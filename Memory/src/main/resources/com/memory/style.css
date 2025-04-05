@@ -1,0 +1,19 @@
+.button-play {
+    -fx-font-size: 18px;
+    -fx-background-color: #4CAF50; /* Vert */
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-font-weight: bold;
+}
+
+.button-rank {
+    -fx-font-size: 18px;
+    -fx-background-color: #2196F3; /* Bleu */
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-font-weight: bold;
+}
+
+#titleText {
+    -fx-fill: #2c3e50; /* Couleur de texte */
+}

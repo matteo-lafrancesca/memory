@@ -1,18 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import eu.hansolo.tilesfx.tiles.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.memory.MenuController" stylesheets="@style.css">
-    <children>
-        <!-- Titre Memorix -->
-        <Text fx:id="titleText" text="Memorix" layoutX="200" layoutY="100"/>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.memory.MenuController"
+            stylesheets="@style.css">
 
-        <!-- Bouton Jouer -->
-        <Button text="Jouer" layoutX="250" layoutY="200" styleClass="button-play" onAction="#handlePlayButtonAction"/>
+    <!-- Fond d'écran adaptatif -->
+    <ImageView fx:id="background" preserveRatio="false">
+        <image>
+            <Image url="@images/background.png" />
+        </image>
+        <AnchorPane.topAnchor>0</AnchorPane.topAnchor>
+        <AnchorPane.bottomAnchor>0</AnchorPane.bottomAnchor>
+        <AnchorPane.leftAnchor>0</AnchorPane.leftAnchor>
+        <AnchorPane.rightAnchor>0</AnchorPane.rightAnchor>
+    </ImageView>
 
-        <!-- Bouton Classement -->
-        <Button text="Classement" layoutX="250" layoutY="260" styleClass="button-rank" onAction="#handleRankingButtonAction"/>
-    </children>
+    <!-- Conteneur centré -->
+    <VBox spacing="20" alignment="CENTER">
+        <AnchorPane.topAnchor>0</AnchorPane.topAnchor>
+        <AnchorPane.bottomAnchor>0</AnchorPane.bottomAnchor>
+        <AnchorPane.leftAnchor>0</AnchorPane.leftAnchor>
+        <AnchorPane.rightAnchor>0</AnchorPane.rightAnchor>
+
+        <!-- Titre -->
+        <Label text="MEMORIX" fx:id="titleLabel" styleClass="title-label"/>
+
+        <!-- Boutons -->
+        <HBox spacing="40" alignment="CENTER">
+            <Button text="JOUER" fx:id="jouerBtn" styleClass="menu-button"/>
+            <Button text="CLASSEMENT" fx:id="classementBtn" styleClass="menu-button"/>
+        </HBox>
+    </VBox>
+
 </AnchorPane>

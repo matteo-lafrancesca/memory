@@ -38,7 +38,7 @@ public class GameManager {
     }
 
     public void initializeGame(int numClassicPairs, List<Card> specialCards) {
-        // Reset the game state
+        // Réinitialiser l'état du jeu
         cards.clear();
         score = 0;
         gameOver = false;
@@ -47,18 +47,18 @@ public class GameManager {
         pendingMermaidConstraint = false; // Réinitialiser la contrainte Sirène
         jackpotRemainingMoves = 0; // Réinitialiser le bonus Jackpot
 
-        // Initialize classic cards
+        // Initialiser les cartes classiques
         for (int i = 1; i <= numClassicPairs; i++) {
-            cards.add(new Card(i, "image" + i + ".png", Card.CardType.CLASSIC));
-            cards.add(new Card(i, "image" + i + ".png", Card.CardType.CLASSIC));
+            cards.add(new Card(i, Card.CardType.CLASSIC));
+            cards.add(new Card(i, Card.CardType.CLASSIC));
         }
 
-        // Add special cards
+        // Ajouter les cartes spéciales
         if (specialCards != null) {
             cards.addAll(specialCards);
         }
 
-        // Shuffle all cards
+        // Mélanger toutes les cartes
         shuffleCards();
     }
 
@@ -84,10 +84,31 @@ public class GameManager {
     public boolean checkPair(Card card1, Card card2) {
         totalMoves++; // Incrémenter le compteur de mouvements
 
+        // Vérifier si la contrainte de la sirène est active
+        if (pendingMermaidConstraint) {
+            if (card1.getId() == card2.getId()) {
+                // Contrainte respectée
+                pendingMermaidConstraint = false; // Réinitialiser la contrainte
+                System.out.println("Contrainte de la Sirène respectée !");
+            } else {
+                // Contrainte non respectée, le joueur perd
+                gameOver = true;
+                System.out.println("Contrainte de la Sirène non respectée. Partie perdue !");
+                return false;
+            }
+        }
+
         // Vérifier si les deux cartes sont appariées
         if (card1.getId() == card2.getId()) {
             card1.setMatched(true);
             card2.setMatched(true);
+
+            // Vérifier si les cartes appariées sont des cartes crâne
+            if (card1 instanceof CraneCard && card2 instanceof CraneCard) {
+                gameOver = true;
+                System.out.println("La contrainte du Crâne a été activée. Partie perdue !");
+                return false;
+            }
 
             // Appeler les comportements spécifiques des cartes
             card1.onMatch(this);
@@ -131,6 +152,27 @@ public class GameManager {
         // Si toutes les cartes classiques sont appariées, la partie est terminée
         System.out.println("Félicitations ! Vous avez découvert toutes les cartes classiques !");
         return true;
+    }
+
+    public String checkGameOver() {
+        if (pendingMermaidConstraint) {
+            gameOver = true;
+            return "Vous avez échoué à satisfaire la contrainte de la Sirène. Partie perdue !";
+        }
+
+        for (Card card : cards) {
+            if (card instanceof CraneCard && card.isMatched()) {
+                gameOver = true;
+                return "La contrainte du Crâne a été activée. Partie perdue !";
+            }
+        }
+
+        if (isGameFinished()) {
+            gameOver = true;
+            return "Félicitations ! Vous avez gagné !";
+        }
+
+        return null; // La partie continue
     }
 
     public int getScore() {

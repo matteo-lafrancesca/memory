@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('fonts/PlayfairDisplay-Bold.ttf');
+}
+
+.label, .button {
+    -fx-font-family: 'Playfair Display';
+    -fx-font-size: 16px; /* Ajustez la taille ici */
+}
+
+.root {
+    -fx-font-family: 'Playfair Display';
+}
+
+.button {
+    -fx-background-color: transparent; /* Fond transparent */
+    -fx-border-color: transparent; /* Pas de bordure */
+}
+
+.button:disabled {
+    -fx-opacity: 1; /* Empêche le grisé des boutons désactivés */
+    -fx-background-color: transparent; /* Fond transparent même désactivé */
+    -fx-border-color: transparent; /* Pas de bordure même désactivé */
+    -fx-text-fill: inherit; /* Conserve la couleur du texte */
+    -fx-effect: none; /* Supprime tout effet visuel (comme un flou ou une ombre) */
+    -fx-cursor: default; /* Remplace le curseur pour refléter l'état désactivé */
+}

@@ -1,23 +1,27 @@
 package com.memory;
 
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LoginWindow extends Application {
+public class LoginWindow {
 
-    @Override
+    private static int userId = -1; // ID utilisateur par défaut (non connecté)
+    private TextField usernameField = new TextField();
+    private PasswordField passwordField = new PasswordField();
+    private Label messageLabel = new Label();
+
     public void start(Stage primaryStage) {
-        // Création de la grille pour l'interface
+        // Configuration de la grille pour l'interface
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
@@ -25,61 +29,21 @@ public class LoginWindow extends Application {
         grid.setPadding(new Insets(25, 25, 25, 25));
 
         // Champs de saisie
-        Label userLabel = new Label("Nom d'utilisateur:");
-        grid.add(userLabel, 0, 1);
-        TextField usernameField = new TextField();
+        grid.add(new Label("Nom d'utilisateur:"), 0, 1);
         grid.add(usernameField, 1, 1);
-
-        Label passwordLabel = new Label("Mot de passe:");
-        grid.add(passwordLabel, 0, 2);
-        PasswordField passwordField = new PasswordField();
+        grid.add(new Label("Mot de passe:"), 0, 2);
         grid.add(passwordField, 1, 2);
 
         // Boutons d'action
         Button signInButton = new Button("Se connecter");
-        grid.add(signInButton, 1, 3);
         Button signUpButton = new Button("S'inscrire");
+        grid.add(signInButton, 1, 3);
         grid.add(signUpButton, 1, 4);
-
-        Label messageLabel = new Label();
         grid.add(messageLabel, 1, 5);
 
-        // Action pour le bouton "S'inscrire"
-        signUpButton.setOnAction(e -> {
-            String username = usernameField.getText().trim();
-            String password = passwordField.getText().trim();
-
-            if (username.isEmpty() || password.isEmpty()) {
-                messageLabel.setText("Les champs ne peuvent pas être vides.");
-                return;
-            }
-
-            if (registerUser(username, password)) {
-                messageLabel.setText("Inscription réussie ! Connectez-vous.");
-            } else {
-                messageLabel.setText("Erreur : nom d'utilisateur déjà existant.");
-            }
-        });
-
-        // Action pour le bouton "Se connecter"
-        signInButton.setOnAction(e -> {
-            String username = usernameField.getText().trim();
-            String password = passwordField.getText().trim();
-
-            if (username.isEmpty() || password.isEmpty()) {
-                messageLabel.setText("Les champs ne peuvent pas être vides.");
-                return;
-            }
-
-            if (authenticateUser(username, password)) {
-                messageLabel.setText("Connexion réussie !");
-                // Lancer le jeu après connexion
-                primaryStage.close();
-                launchGame(username);
-            } else {
-                messageLabel.setText("Nom d'utilisateur ou mot de passe incorrect.");
-            }
-        });
+        // Actions des boutons
+        signInButton.setOnAction(e -> handleSignIn(primaryStage));
+        signUpButton.setOnAction(e -> handleSignUp());
 
         // Affichage de la fenêtre
         Scene scene = new Scene(grid, 400, 300);
@@ -88,19 +52,51 @@ public class LoginWindow extends Application {
         primaryStage.show();
     }
 
+    private void handleSignIn(Stage stage) {
+        String username = usernameField.getText().trim();
+        String password = passwordField.getText().trim();
+
+        if (username.isEmpty() || password.isEmpty()) {
+            messageLabel.setText("Les champs ne peuvent pas être vides.");
+            return;
+        }
+
+        userId = authenticateUser(username, password);
+        if (userId != -1) {
+            stage.close(); // Fermer la fenêtre une fois connecté
+        } else {
+            messageLabel.setText("Nom d'utilisateur ou mot de passe incorrect.");
+        }
+    }
+
+    private void handleSignUp() {
+        String username = usernameField.getText().trim();
+        String password = passwordField.getText().trim();
+
+        if (username.isEmpty() || password.isEmpty()) {
+            messageLabel.setText("Les champs ne peuvent pas être vides.");
+            return;
+        }
+
+        if (registerUser(username, password)) {
+            messageLabel.setText("Inscription réussie ! Connectez-vous.");
+        } else {
+            messageLabel.setText("Erreur : nom d'utilisateur déjà existant.");
+        }
+    }
+
     private boolean registerUser(String username, String password) {
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         String query = "INSERT INTO Utilisateurs (nom, mot_de_passe) VALUES (?, ?)";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-
             stmt.setString(1, username);
-            stmt.setString(2, password); // NOTE : le mot de passe devrait être haché pour des raisons de sécurité
+            stmt.setString(2, hashedPassword);
             stmt.executeUpdate();
             return true;
-
         } catch (SQLException e) {
-            if (e.getErrorCode() == 1062) { // Code erreur MySQL pour "Duplicate entry"
+            if (e.getErrorCode() == 1062) {
                 System.err.println("Nom d'utilisateur déjà existant : " + username);
             } else {
                 e.printStackTrace();
@@ -109,30 +105,27 @@ public class LoginWindow extends Application {
         }
     }
 
-    private boolean authenticateUser(String username, String password) {
-        String query = "SELECT * FROM Utilisateurs WHERE nom = ? AND mot_de_passe = ?";
+    private int authenticateUser(String username, String password) {
+        String query = "SELECT id, mot_de_passe FROM Utilisateurs WHERE nom = ?";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-
             stmt.setString(1, username);
-            stmt.setString(2, password); // NOTE : comparer avec un mot de passe haché
             ResultSet rs = stmt.executeQuery();
-            return rs.next(); // Retourne true si l'utilisateur est trouvé
 
+            if (rs.next()) {
+                String hashedPassword = rs.getString("mot_de_passe");
+                if (BCrypt.checkpw(password, hashedPassword)) {
+                    return rs.getInt("id"); // Retourner l'ID utilisateur
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
+        return -1; // Échec de la connexion
     }
 
-    private void launchGame(String username) {
-        // Démarrez votre jeu ici
-        System.out.println("Bienvenue " + username + "! Le jeu démarre...");
-        // Exemple : nouvelle fenêtre ou lancement de la logique principale
-    }
-
-    public static void main(String[] args) {
-        launch(args);
+    public static int getUserId() {
+        return userId;
     }
 }

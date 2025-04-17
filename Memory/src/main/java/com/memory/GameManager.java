@@ -21,9 +21,10 @@ public class GameManager {
     private GameResetCallback resetCallback; // Callback pour réinitialiser la partie
     private Runnable updateUI; // Callback pour mettre à jour l'UI
     private boolean isTreasureMatch;
+    private final int userId;
 
-
-    public GameManager(GameResetCallback resetCallback) {
+    public GameManager(int userId,GameResetCallback resetCallback) {
+        this.userId = userId;
         this.cards = new ArrayList<>();
         this.score = 0;
         this.gameOver = false;
@@ -151,6 +152,8 @@ public class GameManager {
 
         // Si toutes les cartes classiques sont appariées, la partie est terminée
         System.out.println("Félicitations ! Vous avez découvert toutes les cartes classiques !");
+        DatabaseManager.saveScore(userId, score);
+        DatabaseManager.updateClassement(userId, score);
         return true;
     }
 

@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class DatabaseManager {
 
-    private static final String DATABASE_URL = "jdbc:sqlite:src/main/resources/db/memory_game.db";
+    private static final String DATABASE_URL = "jdbc:sqlite:./memory_game.db";
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DATABASE_URL);

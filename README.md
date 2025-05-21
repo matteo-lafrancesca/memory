@@ -18,15 +18,18 @@ Le jeu a été réalisé seul, à l’AFTEC, durant l’année scolaire 2024/202
 - Classement et meilleurs scores pour encourager la compétition.
 - Interface graphique simple, accessible à tous.
 
-## Règles originales / Cartes spéciales
+## Cartes Spéciales
 
-Memomix introduit plusieurs types de cartes spéciales :
-- **Carte Mélange** : mélange toutes les cartes en cours de partie.
-- **Carte Règle spéciale** : modifie temporairement la façon de jouer.
-- **Carte Points** : ajoute ou retire des points au score du joueur.
-- **Carte Défaite** : fait perdre la partie instantanément.
+Découvrez les cartes spéciales qui ajoutent une dimension stratégique au jeu.
 
-Ces cartes apportent stratégie, gestion du risque et variété au gameplay.
+- **Carte Crane** : Met fin à la partie !
+- **Carte Cyclone** : Toutes les cartes sont mélangées !
+- **Carte Sirène** : Le joueur doit réussir à réunir deux cartes identiques au coup suivant, sinon c'est perdu !
+- **Carte Démon** : Divise le nombre de points du joueur par deux !
+- **Carte Temps** : La carte donne beaucoup de points si elle est trouvée rapidement, sinon elle ne fait rien.
+- **Carte Trésor** : Donne 5 fois plus de points qu'une carte classique, il faut donc la trouver rapidement !
+- **Carte Oeil** : Révèle 5 cartes aléatoires pendant 3 secondes.
+- **Carte Jackpot** : Les 3 prochains mouvements rapportent 3 fois plus de points !
 
 ## Interface utilisateur
 
@@ -56,3 +59,13 @@ Ces cartes apportent stratégie, gestion du risque et variété au gameplay.
 
 - **Dépôt GitHub** : [https://github.com/matteo-lafrancesca/memory](https://github.com/matteo-lafrancesca/memory)
 - Un README détaillé et un Wiki sont intégrés au dépôt pour la documentation technique et utilisateur.
+
+## Auteur
+
+- **Nom** : Mattéo Lafrancesca
+- **Année** : 2024/2025
+- **Contact** : via le dépôt GitHub ou [voir profil](https://github.com/matteo-lafrancesca)
+
+## Licence
+
+MIT (à adapter selon vos besoins)

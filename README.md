@@ -8,11 +8,7 @@ Le jeu a été réalisé seul, à l’AFTEC, durant l’année scolaire 2024/202
 ## Fonctionnalités principales
 
 - Jeu de mémoire classique : retournez des cartes pour retrouver toutes les paires.
-- **Cartes spéciales** : ajoutent des effets uniques pour briser la monotonie :
-  - Mélange en cours de partie,
-  - Modification temporaire des règles,
-  - Gain ou perte de points,
-  - Défaite immédiate si certaines cartes sont révélées.
+- **Cartes spéciales** : ajoutent des effets uniques pour briser la monotonie
 - Système de score basé sur le temps et le nombre de coups.
 - Système d’authentification : chaque joueur possède un compte.
 - Classement et meilleurs scores pour encourager la compétition.
@@ -33,11 +29,8 @@ Découvrez les cartes spéciales qui ajoutent une dimension stratégique au jeu.
 
 ## Interface utilisateur
 
-- Interface moderne réalisée avec JavaFX, inspirée des standards du jeu vidéo éducatif.
+- Interface réalisée avec JavaFX.
 - Navigation intuitive : inscription/connexion, lancement d’une partie, consultation du classement.
-- Accessible sur tous les ordinateurs (Windows/Linux/Mac).
-
-*(Ajoutez ici des captures d’écran si possible)*
 
 ## Système de score et classement
 
@@ -54,18 +47,3 @@ Découvrez les cartes spéciales qui ajoutent une dimension stratégique au jeu.
 - **Outils de conception** : Looping (diagrammes UML)
 - **Gestion de versions** : GitLab
 - **Frontend** : CSS, BootstrapFX, ControlsFX
-
-## Accès au projet et documentation
-
-- **Dépôt GitHub** : [https://github.com/matteo-lafrancesca/memory](https://github.com/matteo-lafrancesca/memory)
-- Un README détaillé et un Wiki sont intégrés au dépôt pour la documentation technique et utilisateur.
-
-## Auteur
-
-- **Nom** : Mattéo Lafrancesca
-- **Année** : 2024/2025
-- **Contact** : via le dépôt GitHub ou [voir profil](https://github.com/matteo-lafrancesca)
-
-## Licence
-
-MIT (à adapter selon vos besoins)

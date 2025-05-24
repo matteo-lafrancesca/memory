@@ -5,9 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.animation.PauseTransition;
@@ -103,6 +101,16 @@ public class GameMain extends Application {
 
         // Configurer la scène
         root = new BorderPane();
+        // Charger l'image de fond
+        Image backgroundImage = new Image(getClass().getResource("/images/game_background.png").toExternalForm());
+        BackgroundImage bImg = new BackgroundImage(
+                backgroundImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true)
+        );
+        root.setBackground(new Background(bImg));
         scoreLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 10;");
         root.setTop(scoreLabel);
         BorderPane.setAlignment(scoreLabel, Pos.CENTER);
@@ -146,14 +154,12 @@ public class GameMain extends Application {
 
     private void handleCardClick(Card card, Button cardButton) {
         if (gameManager.isGameOver()) {
-            return; // Ne pas permettre d'autres actions si la partie est terminée
+            return;
         }
 
         if (card.isMatched() || card.isVisible()) {
             return;
         }
-
-        setGridButtonsDisabled(true);
 
         card.setVisible(true);
         cardButton.setGraphic(getCardImage(card.getImage()));
@@ -162,10 +168,12 @@ public class GameMain extends Application {
         if (firstCard == null) {
             firstCard = card;
             firstButton = cardButton;
-            setGridButtonsDisabled(false);
+            // Pas besoin de désactiver tous les boutons ici
         } else if (secondCard == null && card != firstCard) {
             secondCard = card;
             secondButton = cardButton;
+            // Désactive tous les boutons UNIQUEMENT ici, le temps du tour
+            setGridButtonsDisabled(true);
             checkCards();
         }
     }
@@ -192,7 +200,7 @@ public class GameMain extends Application {
             if (gameManager.isGameFinished()) {
                 showEndGameMessage("Félicitations ! Vous avez gagné !");
             }
-            setGridButtonsDisabled(false);
+            setGridButtonsDisabled(false); // <- Réactive les boutons ici après succès
         } else {
             if (gameManager.isGameOver()) {
                 showEndGameMessage("Vous avez perdu !");
@@ -209,7 +217,7 @@ public class GameMain extends Application {
                 firstButton.setDisable(false);
                 secondButton.setDisable(false);
                 resetCards();
-                setGridButtonsDisabled(false);
+                setGridButtonsDisabled(false); // <- Réactive ICI, après la pause
             });
             pause.play();
         }

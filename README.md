@@ -52,18 +52,18 @@ Découvrez les cartes spéciales qui ajoutent une dimension stratégique au jeu.
 ## Comment jouer ?
 
 1. **Installer Java 24**  
-   Télécharge et installe Java 24 si ce n’est pas déjà fait.  
+   Télécharger et installer Java 24 si ce n’est pas déjà fait.  
    https://www.oracle.com/fr/java/technologies/downloads/
 
 2. **Télécharger le dossier “Compilé”**  
-   Récupère le dossier nommé `Compilé` (fourni avec l’application).
+   Récupérer le dossier nommé `Compilé` (fourni avec l’application).
 
 3. **Lancer le jeu**  
-   Double-clique sur le fichier `start.bat` présent dans le dossier `Compilé`.  
+   Lancer le fichier `start.bat` présent dans le dossier `Compilé`.  
    Cela lancera Memomix.
 
 4. **Créer un compte**  
-   À l’ouverture, inscris-toi pour créer ton compte joueur.
+   À l’ouverture, il faut s'inscrire pour créer un compte joueur.
 
 5. **Jouer**  
-   Commence une partie, découvre les cartes spéciales et essaie d’obtenir le meilleur score !
+   Commencer une partie pour découvrir les cartes spéciales et essayer d’obtenir le meilleur score !

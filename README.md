@@ -47,3 +47,22 @@ Découvrez les cartes spéciales qui ajoutent une dimension stratégique au jeu.
 - **Outils de conception** : Looping (diagrammes UML)
 - **Gestion de versions** : GitLab
 - **Frontend** : CSS, BootstrapFX, ControlsFX
+
+## Comment jouer ?
+
+1. **Installer Java 24**  
+   Télécharge et installe Java 24 si ce n’est pas déjà fait.  
+   https://www.oracle.com/fr/java/technologies/downloads/
+
+2. **Télécharger le dossier “Compilé”**  
+   Récupère le dossier nommé `Compilé` (fourni avec l’application).
+
+3. **Lancer le jeu**  
+   Double-clique sur le fichier `start.bat` présent dans le dossier `Compilé`.  
+   Cela lancera Memomix.
+
+4. **Créer un compte**  
+   À l’ouverture, inscris-toi pour créer ton compte joueur.
+
+5. **Jouer**  
+   Commence une partie, découvre les cartes spéciales et essaie d’obtenir le meilleur score !

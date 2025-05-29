@@ -37,6 +37,7 @@ Découvrez les cartes spéciales qui ajoutent une dimension stratégique au jeu.
 - Le score dépend du nombre de coups et du temps mis pour terminer la partie.
 - Un classement global et un classement meilleurs scores permettent de comparer ses performances à celles des autres joueurs.
 - Incitation à rejouer pour améliorer son score.
+- Pour gagner la partie, il faut retourner toutes les cartes classiques (bordure bleue)
 
 ## Technologies utilisées
 

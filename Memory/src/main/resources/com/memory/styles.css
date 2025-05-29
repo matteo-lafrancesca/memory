@@ -1,27 +1,116 @@
+/* --- FOND GLOBALS --- */
+.root {
+    /* Par défaut pour Game et Classement */
+    -fx-background-image: url("../../images/game_background.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-font-family: 'Playfair Display';
+}
+
+/* --- FONT FACE --- */
 @font-face {
     font-family: 'Playfair Display';
     src: url('fonts/PlayfairDisplay-Bold.ttf');
 }
 
+/* --- TITRE PIRATE --- */
+.pirate-title {
+    -fx-font-family: "Papyrus", "Segoe Print", "Comic Sans MS", cursive, serif;
+    -fx-font-size: 64px;
+    -fx-text-fill: #ffd700;
+    -fx-font-weight: bold;
+    -fx-background-color: rgba(0,0,0,0.3);
+    -fx-background-radius: 18;
+    -fx-padding: 25 60 25 60;
+    -fx-effect: dropshadow(gaussian, #000000cc, 18, 0.5, 2, 2);
+    -fx-border-color: #f9e79f;
+    -fx-border-width: 4;
+    -fx-border-radius: 18;
+}
+
+/* --- TABLEAU CLASSEMENT --- */
+.table-view {
+    -fx-background-color: rgba(255,236,179,0.7);
+    -fx-border-radius: 15;
+    -fx-font-family: "Papyrus", "Segoe Print", cursive;
+    -fx-font-size: 20px;
+}
+.table-view .column-header-background {
+    -fx-background-color: #d4af37;
+}
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: #d4af37;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #7c4700;
+}
+.table-row-cell {
+    -fx-background-color: transparent;
+}
+.table-row-cell:odd {
+    -fx-background-color: rgba(255,236,179,0.6);
+}
+.table-row-cell:even {
+    -fx-background-color: rgba(255,255,255,0.2);
+}
+
+/* --- LABELS ET BOUTONS PAR DEFAUT --- */
 .label, .button {
     -fx-font-family: 'Playfair Display';
-    -fx-font-size: 16px; /* Ajustez la taille ici */
+    -fx-font-size: 16px;
 }
 
-.root {
-    -fx-font-family: 'Playfair Display';
-}
-
+/* --- BOUTONS POUR LES CARTES : restent simples --- */
 .button {
-    -fx-background-color: transparent; /* Fond transparent */
-    -fx-border-color: transparent; /* Pas de bordure */
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-family: 'Playfair Display';
+    -fx-font-size: 16px;
 }
 
+/* --- BOUTONS POUR LES CARTES DÉSACTIVÉS --- */
 .button:disabled {
-    -fx-opacity: 1; /* Empêche le grisé des boutons désactivés */
-    -fx-background-color: transparent; /* Fond transparent même désactivé */
-    -fx-border-color: transparent; /* Pas de bordure même désactivé */
-    -fx-text-fill: inherit; /* Conserve la couleur du texte */
-    -fx-effect: none; /* Supprime tout effet visuel (comme un flou ou une ombre) */
-    -fx-cursor: default; /* Remplace le curseur pour refléter l'état désactivé */
+    -fx-opacity: 1;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: inherit;
+    -fx-effect: none;
+    -fx-cursor: default;
+}
+
+/* --- BOUTONS D'ACTION STYLE PIRATE (MENU, QUITTER, ETC) --- */
+.pirate-button {
+    -fx-background-color: rgba(255, 236, 179, 0.87); /* parchemin clair translucide */
+    -fx-text-fill: #7c4700; /* brun foncé lisible sur parchemin */
+    -fx-font-size: 36px;
+    -fx-font-family: "Papyrus", "Segoe Print", "Comic Sans MS", cursive, serif;
+    -fx-background-radius: 18;
+    -fx-border-color: #f4d03f;
+    -fx-border-width: 4;
+    -fx-border-radius: 18;
+    -fx-padding: 22 100 22 100;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, #00000099, 8, 0.6, 2, 2);
+    -fx-opacity: 0.94;
+    -fx-font-weight: bold;
+    -fx-spacing: 15;
+}
+
+/* --- BOUTONS D'ACTION DÉSACTIVÉS : gardent le style pirate --- */
+.pirate-button:disabled {
+    -fx-background-color: rgba(255, 236, 179, 0.87);
+    -fx-text-fill: #b9770e;
+    -fx-border-color: #a67c00;
+    -fx-opacity: 1;
+    -fx-effect: dropshadow(gaussian, #fff9c4, 12, 0.8, 2, 2);
+    -fx-cursor: default;
+}
+
+.pirate-button:hover {
+    -fx-background-color: #ffd700;
+    -fx-text-fill: #b9770e;
+    -fx-border-color: #a67c00;
+    -fx-effect: dropshadow(gaussian, #fff9c4, 12, 0.8, 2, 2);
+    -fx-opacity: 1;
 }

@@ -1,0 +1,73 @@
+.root {
+    /* Image 1 : fond_menu.png */
+    -fx-background-image: url("../../images/fond_menu.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
+/* Titre pirate, très grand, ombre forte pour lisibilité */
+.pirate-title {
+    -fx-font-family: "Papyrus", "Segoe Print", "Comic Sans MS", cursive, serif;
+    -fx-font-size: 64px;
+    -fx-text-fill: #ffd700;
+    -fx-font-weight: bold;
+    -fx-background-color: rgba(0,0,0,0.3);
+    -fx-background-radius: 18;
+    -fx-padding: 25 60 25 60;
+    -fx-effect: dropshadow(gaussian, #000000cc, 18, 0.5, 2, 2);
+    -fx-border-color: #f9e79f;
+    -fx-border-width: 4;
+    -fx-border-radius: 18;
+}
+
+/* Boutons pirates, larges, effet parchemin translucide, texte foncé/or */
+.pirate-button {
+    -fx-background-color: rgba(255, 236, 179, 0.87); /* parchemin clair translucide */
+    -fx-text-fill: #7c4700; /* brun foncé lisible sur parchemin */
+    -fx-font-size: 36px;
+    -fx-font-family: "Papyrus", "Segoe Print", "Comic Sans MS", cursive, serif;
+    -fx-background-radius: 18;
+    -fx-border-color: #f4d03f;
+    -fx-border-width: 4;
+    -fx-border-radius: 18;
+    -fx-padding: 22 100 22 100;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, #00000099, 8, 0.6, 2, 2);
+    -fx-opacity: 0.94;
+    -fx-font-weight: bold;
+    -fx-spacing: 15;
+}
+
+.pirate-button:hover {
+    -fx-background-color: #ffd700;
+    -fx-text-fill: #b9770e;
+    -fx-border-color: #a67c00;
+    -fx-effect: dropshadow(gaussian, #fff9c4, 12, 0.8, 2, 2);
+    -fx-opacity: 1;
+}
+
+.table-view {
+    -fx-background-color: rgba(255,236,179,0.7);
+    -fx-border-radius: 15;
+    -fx-font-family: "Papyrus", "Segoe Print", cursive;
+    -fx-font-size: 20px;
+}
+.table-view .column-header-background {
+    -fx-background-color: #d4af37;
+}
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: #d4af37;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #7c4700;
+}
+.table-row-cell {
+    -fx-background-color: transparent;
+}
+.table-row-cell:odd {
+    -fx-background-color: rgba(255,236,179,0.6);
+}
+.table-row-cell:even {
+    -fx-background-color: rgba(255,255,255,0.2);
+}

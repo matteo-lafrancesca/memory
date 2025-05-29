@@ -16,10 +16,10 @@ public class Main extends Application {
             int userId = LoginWindow.getUserId();
 
             if (userId != -1) {
-                // Si connecté, lancer le jeu
-                Stage gameStage = new Stage();
-                GameMain gameMain = new GameMain(userId);
-                gameMain.start(gameStage);
+                // Si connecté, lancer le menu principal
+                Stage menuStage = new Stage();
+                MenuWindow menuWindow = new MenuWindow(userId);
+                menuWindow.start(menuStage);
             } else {
                 System.out.println("Aucun utilisateur connecté. Fermeture du programme.");
             }

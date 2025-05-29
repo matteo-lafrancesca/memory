@@ -18,6 +18,10 @@ import java.util.HashMap;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
+/**
+ * Fenêtre principale du jeu. Ajoute le CSS pirate, un bouton "Menu" à gauche du score et un bouton "Quitter" à droite du score.
+ * Les deux boutons arrêtent la partie : "Menu" retourne au menu principal, "Quitter" ferme le programme.
+ */
 public class GameMain extends Application {
     private GameManager gameManager;
     private Label scoreLabel = new Label("Score: 0");
@@ -83,24 +87,52 @@ public class GameMain extends Application {
         for (Card card : gameManager.getCards()) {
             Button cardButton = new Button();
             cardButton.setGraphic(getCardImage(BACK_IMAGE)); // Par défaut, afficher le dos de la carte
-            cardButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;"); // Rendre le fond transparent
+            cardButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
             cardButton.setOnAction(e -> handleCardClick(card, cardButton));
 
-            cardButton.setPrefWidth(200); // Largeur augmentée
-            cardButton.setPrefHeight(200); // Hauteur augmentée
+            cardButton.setPrefWidth(200);
+            cardButton.setPrefHeight(200);
 
             cardButtonMap.put(card, cardButton);
 
             gridPane.add(cardButton, col, row);
             col++;
-            if (col == 8) { // Disposition en grille 6xN
+            if (col == 8) {
                 col = 0;
                 row++;
             }
         }
 
-        // Configurer la scène
+        // Barre du haut : Menu | Score | Quitter
+        Button menuButton = new Button("☰ Menu");
+        menuButton.getStyleClass().add("pirate-button");
+        menuButton.setOnAction(e -> {
+            // Arrête la partie et retourne au menu principal
+            Stage currentStage = (Stage) root.getScene().getWindow();
+            currentStage.close();
+            Stage menuStage = new Stage();
+            new MenuWindow(userId).start(menuStage);
+        });
+
+        Button quitButton = new Button("Quitter");
+        quitButton.getStyleClass().add("pirate-button");
+        quitButton.setOnAction(e -> {
+            // Arrête la partie et ferme l'application
+            Stage currentStage = (Stage) root.getScene().getWindow();
+            currentStage.close();
+            System.exit(0);
+        });
+
+        scoreLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 10;");
+        scoreLabel.getStyleClass().add("pirate-title"); // Pour un style bien visible
+
+        HBox topBar = new HBox(40, menuButton, scoreLabel, quitButton);
+        topBar.setAlignment(Pos.CENTER);
+        topBar.setStyle("-fx-padding: 25px 0;");
+
+        // Layout principal
         root = new BorderPane();
+
         // Charger l'image de fond
         Image backgroundImage = new Image(getClass().getResource("/images/game_background.png").toExternalForm());
         BackgroundImage bImg = new BackgroundImage(
@@ -111,17 +143,15 @@ public class GameMain extends Application {
                 new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true)
         );
         root.setBackground(new Background(bImg));
-        scoreLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 10;");
-        root.setTop(scoreLabel);
-        BorderPane.setAlignment(scoreLabel, Pos.CENTER);
+        root.setTop(topBar);
         root.setCenter(gridPane);
 
         Scene scene = new Scene(root, 1920, 1080);
 
-        // Charger le fichier CSS
+        // Charger le CSS pirate
         scene.getStylesheets().add(getClass().getResource("/com/memory/styles.css").toExternalForm());
         stage.setScene(scene);
-        stage.setFullScreen(true); // Activer le plein écran
+        stage.setFullScreen(true);
         stage.setTitle("Memory Game");
         stage.show();
     }
@@ -132,11 +162,11 @@ public class GameMain extends Application {
             if (cardButton == null) continue;
 
             if (card.isMatched() || card.isVisible()) {
-                cardButton.setGraphic(getCardImage(card.getImage())); // Afficher l'image si visible ou appariée
-                cardButton.setDisable(card.isMatched()); // Désactiver si appariée
+                cardButton.setGraphic(getCardImage(card.getImage()));
+                cardButton.setDisable(card.isMatched());
             } else {
-                cardButton.setGraphic(getCardImage(BACK_IMAGE)); // Afficher le dos de la carte
-                cardButton.setDisable(false); // Assurer qu'elle reste cliquable
+                cardButton.setGraphic(getCardImage(BACK_IMAGE));
+                cardButton.setDisable(false);
             }
         }
     }
@@ -148,7 +178,7 @@ public class GameMain extends Application {
         // Arrêter le programme JavaFX lorsque la fenêtre principale est fermée
         primaryStage.setOnCloseRequest(event -> {
             System.out.println("Fermeture de la fenêtre. Arrêt du programme.");
-            System.exit(0); // Terminer le processus Java
+            System.exit(0);
         });
     }
 
@@ -168,11 +198,9 @@ public class GameMain extends Application {
         if (firstCard == null) {
             firstCard = card;
             firstButton = cardButton;
-            // Pas besoin de désactiver tous les boutons ici
         } else if (secondCard == null && card != firstCard) {
             secondCard = card;
             secondButton = cardButton;
-            // Désactive tous les boutons UNIQUEMENT ici, le temps du tour
             setGridButtonsDisabled(true);
             checkCards();
         }
@@ -200,7 +228,7 @@ public class GameMain extends Application {
             if (gameManager.isGameFinished()) {
                 showEndGameMessage("Félicitations ! Vous avez gagné !");
             }
-            setGridButtonsDisabled(false); // <- Réactive les boutons ici après succès
+            setGridButtonsDisabled(false);
         } else {
             if (gameManager.isGameOver()) {
                 showEndGameMessage("Vous avez perdu !");
@@ -217,7 +245,7 @@ public class GameMain extends Application {
                 firstButton.setDisable(false);
                 secondButton.setDisable(false);
                 resetCards();
-                setGridButtonsDisabled(false); // <- Réactive ICI, après la pause
+                setGridButtonsDisabled(false);
             });
             pause.play();
         }
@@ -259,6 +287,7 @@ public class GameMain extends Application {
         endGameLabel.setStyle("-fx-font-size: 28px; -fx-font-weight: bold;");
 
         Button restartButton = new Button("Recommencer");
+        restartButton.getStyleClass().add("pirate-button");
         restartButton.setOnAction(e -> resetGame());
 
         endGameContainer.getChildren().addAll(endGameLabel, restartButton);
